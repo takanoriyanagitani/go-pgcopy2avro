@@ -1,0 +1,19 @@
+package val2avro
+
+// This file is generated using valwtr.tmpl. NEVER EDIT.
+
+import (
+	rs "github.com/takanoriyanagitani/go-rowlike2sqlvalues"
+)
+
+var type2resolverGen TypeToResolverGen = TypeToResolverGen{
+	{{- range .TypeHints }}
+		rs.Primitive{{.}}: ValueWriter{{.}}New,
+	{{- end }}
+
+	{{- range .TypeHints }}
+		{{ if not ( eq "Null" . ) }}
+			rs.Null{{.}}: ValueWriter{{.}}NullNew,
+		{{ end }}
+	{{- end }}
+}
